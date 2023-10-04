@@ -13,4 +13,6 @@ public interface ICityService
     List<City> findAll();
     
     void add(City city);
+
+	City findById(long id);
 }

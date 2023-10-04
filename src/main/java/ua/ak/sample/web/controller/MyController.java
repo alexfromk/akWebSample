@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpServletRequest;
 import ua.ak.sample.web.models.City;
 import ua.ak.sample.web.services.ICityService;
 
@@ -32,13 +34,7 @@ public class MyController
 
     @GetMapping("/cities")
     public ModelAndView showCities() {
-
-        List<City> cities = cityService.findAll();
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("cities", cities);
-
-        return new ModelAndView("cities", params);
+    	return toCityList();
     }
     
     @GetMapping("/add_city")
@@ -50,14 +46,31 @@ public class MyController
     
     @PostMapping("/save_city")
     public ModelAndView saveCity(City newCity, final BindingResult bindingResult) {
-    	//City newCity=(City)model.getAttribute("newCity");
     	cityService.add(newCity);
-        List<City> cities = cityService.findAll();
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("cities", cities);
-
-        return new ModelAndView("cities", params);
+        return toCityList();
     }
 
+    @GetMapping("/modify_city")
+    public ModelAndView modifyCity(HttpServletRequest request) {
+    	String idForChange = request.getParameter("id");
+    	if(idForChange!=null)
+    	{
+    		Long id = Long.valueOf(idForChange);
+    		City foundCity = cityService.findById(id);
+    		if(foundCity!=null)
+    		{
+    			Map<String, Object> params = new HashMap<>();
+    	        	params.put("newCity", foundCity);
+    	        	return new ModelAndView("add_city", params);
+    		}
+    	}
+        return toCityList();
+    }
+
+    ModelAndView toCityList()
+    {
+    	Map<String, Object> params = new HashMap<>();
+    	params.put("cities", cityService.findAll());
+    	return new ModelAndView("cities", params);
+    }
 }

@@ -15,16 +15,17 @@
         <th>Id</th>
         <th>Name</th>
         <th>Population</th>
-        <th><a href="add_city">Create new</a></th>
+        <th>actions</th>
     </tr>
 
     <tr th:each="city : ${cities}">
         <td th:text="${city.id}">id</td>
         <td th:text="${city.name}">name</td>
         <td th:text="${city.population}">population</td>
-        <td > </td>
+        <!--<td><a href="/modify_city?id=*{city.id}">modify</a> </td> -->
+        <td><a th:href="@{'/modify_city?id=' + ${city.id}}">modify</a>
     </tr>
 </table>
-	<a href="/">To home</a>
+	<a href="/">To home</a> | <a href="add_city">Create new</a>
 </body>
 </html>

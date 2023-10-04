@@ -26,11 +26,32 @@ public class MockCityService implements ICityService
 	{
 		return list;
 	}
+	
 	@Override
 	public void add(City city)
 	{
-		list.add(city);		
+		City foundCity=findById(city.getId());
+		if(foundCity==null)
+		{
+			//insert
+			list.add(city);
+		}
+		else
+		{
+			//update
+			foundCity.setName(city.getName());
+			foundCity.setPopulation(city.getPopulation());
+		}
 	}
 	
+	@Override
+	public City findById(long id)
+	{
+		for(City tmpItem : list)
+		{
+			if(id==tmpItem.getId())return tmpItem;
+		}
+		return null;		
+	}
 
 }
