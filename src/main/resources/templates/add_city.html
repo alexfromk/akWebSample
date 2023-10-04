@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Cities</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+</head>
+<body>
+
+<h2>Add the city</h2>
+<form action="#" th:action="@{/save_city}" th:object="${newCity}" method="post">
+	<br>id<input type="id" id="id" name="id" th:value="*{id}" />    
+    <br>Name <input type="text" id="name" name="name" th:value="*{name}" />
+    <br>Population <input type="text" id="population" name="population" th:value="*{population}" />
+<button name="removeRow" type="submit" value="1">Save</button>    
+</form>
+
+</body>
+</html>

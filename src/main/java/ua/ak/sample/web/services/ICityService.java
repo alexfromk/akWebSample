@@ -11,4 +11,6 @@ import ua.ak.sample.web.models.City;
 public interface ICityService 
 {
     List<City> findAll();
+    
+    void add(City city);
 }

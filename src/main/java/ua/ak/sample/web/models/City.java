@@ -8,9 +8,9 @@ import java.util.Objects;
  */
 public class City {
 
-    private Long id;
-    private String name;
-    private int population;
+    private Long id=0L;
+    private String name="+";
+    private int population=0;
 	public City()
 	{
 		super();
